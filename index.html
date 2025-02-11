@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Audiarr App</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="content">
+    <!-- Each section is a "page" in our simple navigation -->
+    <section id="artists" class="tab active">
+      <h1>Artists</h1>
+      <div id="artists-content">
+        <!-- API data for artists will be injected here -->
+      </div>
+    </section>
+
+    <section id="albums" class="tab">
+      <h1>Albums</h1>
+      <div id="albums-content">
+        <!-- API data for albums will be injected here -->
+      </div>
+    </section>
+
+    <section id="search" class="tab">
+        <h1>Search</h1>
+        <div id="search-content">
+          <input type="text" id="search-input" placeholder="Search tracks, artists, etc.">
+          <div id="search-results"></div>
+        </div>
+      </section>
+
+    <section id="album-detail" class="tab">
+        <button id="back-to-albums" onclick="backToAlbums()"><b><</b></button>
+        <div id="album-detail-content"></div>
+      </section>
+
+      <!-- Artist Detail View -->
+      <section id="artist-detail" class="tab">
+        <button id="back-to-artists" onclick="backToArtists()"><b><</b></button>
+        <div id="artist-detail-content"></div>
+      </section>
+
+      <!-- Track Player View -->
+        <section id="track-player" class="tab">
+            <button id="back-to-album-from-track" onclick="backToAlbumDetail()"><b><</b></button>
+            <div class="track-player-content">
+            <img id="player-album-artwork" src="" alt="Album Artwork" class="player-album-artwork">
+            
+            <!-- New Seek Bar Section -->
+            <div class="seek-bar-container">
+                <span id="current-time">0:00</span>
+                <input type="range" id="seek-bar" min="0" max="0" value="0">
+                <span id="total-time">0:00</span>
+            </div>
+            
+            <div class="track-details">
+                <p id="player-artist"></p>
+                <p id="player-track-name"><strong></strong></p>
+                <p id="player-album"></p>
+            </div>
+            <div class="player-controls">
+                <button id="prev-track" onclick="prevTrack()">Previous</button>
+                <button id="play-pause" onclick="togglePlayPause()">Play/Pause</button>
+                <button id="next-track" onclick="nextTrack()">Next</button>
+            </div>
+            <div class="volume-control">
+                <input type="range" id="volume-bar" min="0" max="1" step="0.01" value="1">
+            </div>
+            <!-- Hidden audio element for playback -->
+            <audio id="audio-player"></audio>
+            </div>
+        </section>
+  
+  
+  </div>
+    
+
+  <footer>
+    <nav class="footer-nav">
+      <button onclick="switchTab('artists')">Artists</button>
+      <button onclick="switchTab('albums')">Albums</button>
+      <button onclick="switchTab('search')">Search</button>
+    </nav>
+  </footer>
+
+  <script src="renderer.js"></script>
+</body>
+</html>
