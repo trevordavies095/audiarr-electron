@@ -526,7 +526,6 @@ function loadTrackPlayer(trackIndex) {
 
   function performSearch() {
     const query = document.getElementById('search-input').value;
-    console.log("Search query:", query);
     if (!query) {
       document.getElementById('search-results').innerHTML = '';
       return;
@@ -542,20 +541,23 @@ function loadTrackPlayer(trackIndex) {
         const container = document.getElementById('search-results');
         container.innerHTML = '';
   
-        let foundResults = false;
+        // Determine whether each category has results
+        const hasArtists = data.artists && data.artists.length > 0;
+        const hasAlbums  = data.albums && data.albums.length > 0;
+        const hasTracks  = data.tracks && data.tracks.length > 0;
   
-        // Artists Section
-        if (data.artists && data.artists.length > 0) {
+        // Render artists if available
+        if (hasArtists) {
           const artistsHeader = document.createElement('h2');
           artistsHeader.textContent = 'Artists';
           container.appendChild(artistsHeader);
-
+  
           data.artists.forEach(artist => {
             const artistEl = document.createElement('div');
             artistEl.classList.add('search-artist');
             artistEl.textContent = artist.name;
-            artistEl.style.cursor = 'pointer';  // Indicate it's clickable
-            // Attach a click event to load the artist details page.
+            // Make artist clickable to load artist details
+            artistEl.style.cursor = 'pointer';
             artistEl.addEventListener('click', () => {
               loadArtistDetail(artist.id);
             });
@@ -563,39 +565,35 @@ function loadTrackPlayer(trackIndex) {
           });
         }
   
-        // Albums Section
-        if (data.albums && data.albums.length > 0) {
+        // Render albums if available
+        if (hasAlbums) {
           const albumsHeader = document.createElement('h2');
           albumsHeader.textContent = 'Albums';
           container.appendChild(albumsHeader);
-
+  
           data.albums.forEach(album => {
             const albumEl = document.createElement('div');
             albumEl.classList.add('search-album');
-            // Display album name along with the artist name
             albumEl.textContent = `${album.name} - ${album.artistName}`;
-            // Make the album clickable
             albumEl.style.cursor = 'pointer';
             albumEl.addEventListener('click', () => {
-              // Load the album detail view for this album
               loadAlbumDetail(album.id);
             });
             container.appendChild(albumEl);
           });
         }
   
-        // Tracks Section
-        if (data.tracks && data.tracks.length > 0) {
+        // Render tracks if available
+        if (hasTracks) {
           const tracksHeader = document.createElement('h2');
           tracksHeader.textContent = 'Tracks';
           container.appendChild(tracksHeader);
-
+  
           data.tracks.forEach(track => {
             const trackEl = document.createElement('div');
             trackEl.classList.add('search-track');
             trackEl.textContent = `${track.title} - ${track.artistName} (${track.albumName})`;
             trackEl.style.cursor = 'pointer';
-            // When clicked, call a helper function to load the track player for this track.
             trackEl.addEventListener('click', () => {
               loadTrackPlayerFromSearch(track);
             });
@@ -603,22 +601,18 @@ function loadTrackPlayer(trackIndex) {
           });
         }
   
-        if (!foundResults) {
+        // If none of the categories have results, show a "No results found" message.
+        if (!hasArtists && !hasAlbums && !hasTracks) {
           const noResults = document.createElement('p');
           noResults.textContent = 'No results found.';
           container.appendChild(noResults);
         }
       })
       .catch(err => console.error('Error performing search:', err));
-  }  
-  const debouncedSearch = debounce(performSearch, 300);
-  document.getElementById('search-input').addEventListener('input', debouncedSearch);
+  }
   
-
-  
-  
-  
-  
+  // Attach the function to the search input (or button if you keep one)
+  document.getElementById('search-input').addEventListener('input', debounce(performSearch, 300));
 
   document.addEventListener('DOMContentLoaded', () => {
     const volumeBar = document.getElementById('volume-bar');
