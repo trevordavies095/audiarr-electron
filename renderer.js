@@ -443,12 +443,19 @@ function loadTrackPlayer(trackIndex) {
   
   function togglePlayPause() {
     const audioPlayer = document.getElementById('audio-player');
+    const playPauseButton = document.getElementById('play-pause');
+  
     if (audioPlayer.paused) {
       audioPlayer.play();
+      // Change the icon to "pause" when playing.
+      playPauseButton.innerHTML = '<i class="fas fa-pause"></i>';
     } else {
       audioPlayer.pause();
+      // Change the icon back to "play" when paused.
+      playPauseButton.innerHTML = '<i class="fas fa-play"></i>';
     }
   }
+  
 
   function debounce(func, delay) {
     let timeoutId;

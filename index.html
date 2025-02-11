@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>Audiarr App</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
   <div id="content">
@@ -43,7 +44,7 @@
 
       <!-- Track Player View -->
         <section id="track-player" class="tab">
-            <button id="back-to-album-from-track" onclick="backToAlbumDetail()"><b><</b></button>
+            <button id="back-to-album-from-track" onclick="backToAlbumDetail()"><i class="fa-solid fa-left-long"></i></button>
             <div class="track-player-content">
             <img id="player-album-artwork" src="" alt="Album Artwork" class="player-album-artwork">
             
@@ -60,9 +61,9 @@
                 <p id="player-album"></p>
             </div>
             <div class="player-controls">
-                <button id="prev-track" onclick="prevTrack()">Previous</button>
-                <button id="play-pause" onclick="togglePlayPause()">Play/Pause</button>
-                <button id="next-track" onclick="nextTrack()">Next</button>
+                <button id="prev-track" onclick="prevTrack()"><i class="fas fa-backward"></i></button>
+                <button id="play-pause" onclick="togglePlayPause()"><i class="fas fa-play"></i></button>
+                <button id="next-track" onclick="nextTrack()"><i class="fas fa-forward"></i></button>
             </div>
             <div class="volume-control">
                 <input type="range" id="volume-bar" min="0" max="1" step="0.01" value="1">
