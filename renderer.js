@@ -10,8 +10,8 @@ function switchTab(tabId) {
     if (selectedTab) {
       selectedTab.classList.add('active');
       // Optionally load data for specific tabs if necessary
-      if (tabId === 'artists') {
-        loadArtists();
+      if (tabId === 'home') {
+        loadHome();
       } else if (tabId === 'albums') {
         loadAlbums();
       } else if (tabId === 'tracks') {
@@ -26,57 +26,8 @@ function backToAlbums() {
 
 // Example functions for fetching data from audiarr-server REST APIs
 // Replace the API endpoint URLs with those specified in your Swagger documentation
-
-function loadArtists() {
-    fetch('http://192.168.4.205:5279/api/library/artists')
-      .then(response => response.json())
-      .then(data => {
-        const container = document.getElementById('artists-content');
-        container.innerHTML = '';
-  
-        data.forEach(artist => {
-          // Create the artist card container
-          const artistCard = document.createElement('div');
-          artistCard.classList.add('artist-card');
-  
-          // Create the artist image element or a placeholder if missing
-          if (artist.coverArtUrl && artist.coverArtUrl.trim() !== '') {
-            const artistImage = document.createElement('img');
-            // If the URL is relative, prepend your API base URL (adjust as needed)
-            artistImage.src = artist.coverArtUrl.startsWith('http')
-              ? artist.coverArtUrl
-              : `http://192.168.4.205:5279${artist.coverArtUrl}`;
-            artistImage.alt = `${artist.name} image`;
-            artistImage.classList.add('artist-image');
-            artistCard.appendChild(artistImage);
-          } else {
-            const placeholder = document.createElement('div');
-            placeholder.classList.add('artist-image-placeholder');
-            placeholder.textContent = "No Image";
-            artistCard.appendChild(placeholder);
-          }
-  
-          // Create a container for artist info
-          const infoDiv = document.createElement('div');
-          infoDiv.classList.add('artist-info');
-  
-          // Artist name
-          const artistNameEl = document.createElement('h2');
-          artistNameEl.textContent = artist.name;
-          infoDiv.appendChild(artistNameEl);
-  
-          // Optionally, display additional details (like album count)
-          if (artist.albumCount !== undefined) {
-            const albumCountEl = document.createElement('p');
-            albumCountEl.textContent = `Albums: ${artist.albumCount}`;
-            infoDiv.appendChild(albumCountEl);
-          }
-  
-          artistCard.appendChild(infoDiv);
-          container.appendChild(artistCard);
-        });
-      })
-      .catch(err => console.error('Error fetching artists:', err));
+function loadHome() {
+    
   }
   
 
@@ -348,7 +299,7 @@ function loadArtists() {
   
   function backToArtists() {
     // Switch back to the artists tab (assuming you have one)
-    switchTab('artists');
+    switchTab('home');
   }
   
 
@@ -637,5 +588,5 @@ function loadTrackPlayer(trackIndex) {
 
 // Optionally, load the default tab on startup
 document.addEventListener('DOMContentLoaded', () => {
-  switchTab('artists');
+  switchTab('home');
 });
